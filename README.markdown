@@ -1,0 +1,1 @@
+![Chronos logo](https://dl.dropbox.com/u/4936034/Referred/Chronos.png)
