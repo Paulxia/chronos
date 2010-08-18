@@ -5,32 +5,40 @@
  * This file contains various routine related to observations of the Sun.
  *
  * Three functions are given that allow computations of solar ephemerides:
- *      True (geometric) geocentric position of the Sun is computed by means of semi-analytic planetary theory VSOP87
- *          developed by P. Bretagnon and G. Francou. This theory computes solar position with claimed accuracy of less
- *          than one arcsecond between years 3000 B.C. and 3000 A.D. This theory takes into account perturbed motion of
- *          the Earth and thus, more precise than simple analytic theories.
+ *      True (geometric) geocentric position of the Sun.
  *      Apparent positions of the Sun uses previous routine to determine geometric position and then performs
  *          corrections for effects of solar aberration and nutation of rotational axis of the Earth. It should be
  *          noted that this apparent position is geocentric (i.e. as seen from the centre of the Earth), and thus,
- *          requires additional corrections for diurnal parallax and atmospheric refraction if exact topocenric (i.e.
- *          as seen from the surface of the Earth) position is required.
+ *          requires additional corrections for diurnal parallax and atmospheric refraction if exact topocenric
+ *          position (i.e. as seen from the surface of the Earth) is required.
  *      Distance from the Sun to the Earth, computed from centres of the bodies and is measured in astronomical units
- *          (AU). This functon also uses planetary theory VSOP87. Note, that the result of this function is same with
- *          the result of the function that computes the distance from the planet to the Sun, where given planet is
- *          the Earth; refer to the planet routines computation file.
- * Functions, that compute positions of the Sun, return ecliptic coordinates referred to the mean ecliptic and equinox
- * of date.
+ *          (AU).
+ *
+ * Positions, computed by abovementioned routines are expressed in ecliptic coordinated referred to the mean ecliptic
+ * and equinox of date.
+ *
+ * These functions rely on semi-analytical planetary theory VSOP87 version D developed by P. Bretagnon and G. Francou
+ * at Service de Mèchanique Céleste du Bureau des Longitudes, Paris, France. This theory considers perturbed motion
+ * of the planets, i.e. being effected by gravitational attraction not only Sun, but each other and thus is more
+ * precise than analytical Keplerian approach. This implementation uses full series given in the theory and thus
+ * claimed accuracy of the results does not exceed one second of arc for time span since 3000 B.C. to 3000 A.D.
+ * (compared to planetary ephemeris DE200 developed by NASA Jet Propulsion Laboratory ?)
+ *
+ * For more information on theory VSOP87 refer to source material [1]. 
  *
  * Functions that compute dates of solstice and equinoxes should be accurate up to seconds given the accuracy of
  * planetary theory VSOP87. Times of solstices and equinoxes is given in Dynamical Time and should be corrected to
  * Universal Time, if necessary.
+ *
  * It should be noted, that names of the equinoxes and solstices are the ones used in Northern hemisphere. Since
  * Southern hemisphere has seasons opposite to the ones in Northern, to eliminate naming confusion, refer to the
  * description of solstice and equinox parameters to see their occurences dates.
  *
- * Another function given in this file computes the value of the equiation of time, commonly denoted as E.
- * Equiation of time is the difference between apparent and mean time, i.e. between the hour angle of the true Sun and
- * the mean Sun.
+ * Also a function is given to compute the value of the equiation of time, commonly denoted as E. Equiation of time is
+ * the difference between apparent and mean time, i.e. between the hour angle of the true Sun and the mean Sun.
+ *
+ * [1] P. Bretagnon and G. Francou. Planetary theories in rectangular and spherical variables. VSOP87 solutions.
+ *     Astronomy and Astrophysics, vol. 202, 1988, pp 309-315.
  */
 
 #ifndef SUN_H
@@ -79,9 +87,6 @@ ecliptic_point sun_apparent_position(date d);
  * (AU). Note, that computed distance is true (geometrical), not apparent.
  *
  * Source: J. Meuss. Astronomical Algorothms. William-Bell, 1991, p. 154.
- *
- *         P. Bretagnon and G. Francou. Planetary theories in rectangular and spherical variables. VSOP87 solutions.
- *         Astronomy and Astrophysics, vol. 202, 1988, pp 309-315
  */
 double sun_distance_to_earth(date d);
 

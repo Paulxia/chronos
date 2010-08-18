@@ -2,7 +2,7 @@
  * calendar.h
  * Created by Serhii Tsyba (sertsy@gmail.com) on 23.06.10.
  *
- * This files contains data types and various routines related to time measurement and calendar phenomena.
+ * This files contains data types and various routines related to time measurement and calendar calculations.
  *
  * File defines date data type which is used throughout the library as the main type to represent time instance. Day
  * number of this data type is a decimal: integer part represents day number of the month and fractional part - hour

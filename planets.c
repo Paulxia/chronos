@@ -219,8 +219,9 @@ double planet_phase_angle(date d, Planet p)
         i = acos((pds * pds + pde * pde - eds * eds) / (2.0 * pds * pde));
     }
     else
-        // if Earth is given as a planet to compute phase angle of, assigning error value
-        i = -1;
+        // if Earth is given as a planet to compute phase angle of, the only meaningful value that function can output
+        // is 0
+        i = 0;
     
     return i;
 }
@@ -264,7 +265,7 @@ static ecliptic_point saturnicentric_earth_position(date d)
     i = 28.075216 - 0.012998 * t + 0.000004 * t * t;
     // computing longitude of the ascending node measured in degrees
     o = 169.508470 + 1.394681 * t + 0.000412 * t * t;
-
+    
     // converting inclination of the plane of the ring from degrees to radians (π = 180°)
     i *= M_PI / 180.0;
     // converting longitude of the ascending node from degrees to radians (π = 180°)
@@ -364,7 +365,7 @@ static ecliptic_point saturnicentric_sun_position(date d)
     
     // computing saturnicentric position of the Sun
     ep.longitude = atan2(sin(i) * sin(ssp.latitude) + cos(i) * cos(ssp.latitude) * sin(ssp.longitude - o),
-                          cos(ssp.latitude) * cos(ssp.longitude - o));
+                         cos(ssp.latitude) * cos(ssp.longitude - o));
     ep.latitude = asin(sin(i) * cos(ssp.latitude) * sin(ssp.longitude - o) - cos(i) * sin(ssp.latitude));
     
     // shifting longitude to interval [0, 2π)
@@ -384,7 +385,7 @@ double planet_apparent_magnitude(date d, Planet p)
     ecliptic_point ssp;         // saturnicentric apparent position of the Sun
     double b;                   // saturnicentric latitude of the Earth
     double du;                  // difference between saturnicentric longitudes of the Sun and the Earth
-    double m;                   // result apparent stellar magnitude of a given planet
+    double m;                   // result apparent magnitude of a given planet
     
     if (p != EARTH) {
         // computing distance from the Sun to a given planet
@@ -393,11 +394,11 @@ double planet_apparent_magnitude(date d, Planet p)
         pde = planet_distance_to_earth(d, p);
         // computing planet's phase angle
         i = planet_phase_angle(d, p);
-        // converting value of the planet's phase angle from radians to degrees (π = 180°), since formulas for stellar
+        // converting value of the planet's phase angle from radians to degrees (π = 180°), since formulas for
         // magnitude of a planet operates on the value expressed in degrees
         i *= 180.0 / M_PI;
         
-        // computing apparent stellar magnitude of a given planet
+        // computing apparent magnitude of a given planet
         switch (p) {
             case MERCURY:
                 m = -0.42 + 5 * log10(pds * pde) + 0.0380 * i - 0.000273 * i * i + 0.000002 * i * i * i;
@@ -412,8 +413,8 @@ double planet_apparent_magnitude(date d, Planet p)
                 m = -9.40 + 5 * log10(pds * pde) + 0.005 * i;
                 break;
             case SATURN:
-                // in case of Saturn, apparent stellar magnitude depends also on the position of the ring(s), so these
-                // extra computations are necessary
+                // in case of Saturn, apparent magnitude depends also on the position of the ring(s), so these extra
+                // computations are necessary
                 
                 // computing saturnicentric position of the Earth referred to the plane of the ring(s)
                 sep = saturnicentric_earth_position(d);
@@ -438,8 +439,8 @@ double planet_apparent_magnitude(date d, Planet p)
         }
     }
     
-    // if Earth is given as a planet whose apparent stellar magnitude is to be computed, no meaningful value can be
-    // given; in that case just return whatever value result variable was initialized with
+    // if Earth is given as a planet whose apparent magnitude is to be computed, no meaningful value can be given; in
+    // that case just return whatever value result variable was initialized with
     
     return m;
 }

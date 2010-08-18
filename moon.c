@@ -22,7 +22,7 @@ ecliptic_point moon_true_position(date d)
     t = (julian_ephemeris_date(d) - J2000) / DAYS_IN_JULIAN_CENTURY;
     
     // computing true position of the moon by means of semi-analytic lunar theory ELP2000
-    sp = geocentric_moon_position(t);
+    sp = geocentric_moon_position_of_date(t);
     
     // since theory ELP2000 expresses ecliptic coordinates in arcseconds, converting from arcseconds to radians (π = 648000")
     ep.longitude = sp.longitude * M_PI / 648000;
@@ -65,7 +65,7 @@ double moon_distance_to_earth(date d)
     t = (julian_ephemeris_date(d) - J2000) / DAYS_IN_JULIAN_CENTURY;
     
     // computing true position of the moon by means of semi-analytic lunar theory ELP2000
-    sp = geocentric_moon_position(t);
+    sp = geocentric_moon_position_of_date(t);
     
     // since theory ELP2000 expresses distance in kilometers, converting from kilometers to astronomical units (1 AU = 149597871 km)
     ds = sp.distance / ASTRONOMICAL_UNIT;
