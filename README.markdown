@@ -80,7 +80,7 @@ Staged future improvements and expected functionality
 * Add some related calculations, like solving equation of Kepler, solving equation of the centre, etc.
 
 
-[0]: https://dl.dropbox.com/u/4936034/Referred/Chronos.png      "Chronos logo"
+[0]: https://dl.dropbox.com/u/4936034/Referred/chronos.jpg      "Chronos logo"
 [1]: http://www.willbell.com/math/mc1.HTM                       "J. Meeus. Astronomical algorithms"
 [2]: http://github.com/sertsy/vsop87d                           "VSOP87D sources at GitHub"
 [3]: http://github.com/sertsy/elp2000-82b                       "ELP2000-82B sources at GitHub"
